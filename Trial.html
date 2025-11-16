@@ -52,13 +52,14 @@
 
         async function loadQuizModule() {
             try {
+                const apiUrl = 'https://localhost:7108/api/Exam/createExam';
                 const { QuizModule } = await import('./js/quiz.js');
                 const quiz = new QuizModule({
-                    apiUrl: 'https://localhost:7108/api/Exam/createExam',
+                    apiUrl: apiUrl,
                     containerId: 'main-container'
                 });
                 await quiz.init();
-                console.log('quiz.js loaded and initialized with API:', apiUrl);
+                console.log('quiz.js loaded and initialized with API:', apiUrl); // dùng apiUrl ở đây
             } catch (err) {
                 console.error('Error loading quiz.js:', err);
             }

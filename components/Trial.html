@@ -1,42 +1,45 @@
 <section id="quiz" class="quiz-section container" aria-labelledby="quizTitle" data-duration="900">
-    <h1 class="title" id="quizTitle">Thi Trắc Nghiệm (Demo)</h1>
+    <h1 class="title" id="quizTitle">Thi Trắc Nghiệm (Trial)</h1>
 
     <div class="layout">
-        <aside class="card" aria-labelledby="gridTitle">
+        <aside class="card side-panel" aria-labelledby="gridTitle">
             <div id="gridTitle" class="card-title">Câu hỏi</div>
             <div class="q-grid" id="qGrid" role="list" aria-label="Danh sách câu hỏi">
                 <!-- JS sẽ render các ô số câu -->
             </div>
 
-            <div style="margin-top:12px; display:flex; gap:8px;">
+            <div class="side-actions" style="margin-top:12px; display:flex; gap:8px;">
                 <button class="btn" id="resetBtn" type="button">Làm lại</button>
             </div>
         </aside>
 
         <section class="question-card" aria-live="polite">
-            <!-- Thời gian (static, không có JS) -->
-            <div class="quiz-time" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
-                <div>
-                    <strong>Thời gian làm bài:</strong>
-                    <!-- Hiển thị thời gian ban đầu. Không có JS thì đây chỉ là chữ cố định. -->
-                    <time id="quizDuration" datetime="PT15M">19:00</time>
+            <!-- TIMER: chỉ hiển thị thời gian, không có nút điều khiển -->
+            <div class="quiz-timer" style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <strong aria-hidden="true">Thời gian còn lại:</strong>
+                    <div id="timerDisplay" role="timer" aria-live="polite" aria-atomic="true" style="font-family:monospace; font-weight:700;">
+                        00:00
+                    </div>
                 </div>
-                <div style="font-size:.9rem; color:#666;">
-                    <span>Hết giờ sẽ tự động nộp</span>
+
+                <div style="color:#666; font-size:.9rem;">
+                    <!-- Thông báo nhỏ; không có nút -->
+                    <span>Thời gian được quản lý tự động.</span>
                 </div>
             </div>
-            <!-- /Thời gian -->
+            <!-- END TIMER -->
 
             <div class="question-title" id="questionTitle">Câu hỏi 1:</div>
-            <div class="question-text" id="questionText">Nội dung ví dụ cho câu hỏi 1.</div>
+            <div class="question-text" id="questionText">Nội dung câu hỏi</div>
 
-            <div class="question-img" id="questionImg" aria-hidden="true">[ Hình (blank) ]</div>
+            <div class="question-img" id="questionImg" aria-hidden="true"></div>
 
             <form class="options" id="optionsForm" role="radiogroup" aria-labelledby="questionTitle">
-                <!-- options sẽ render bằng JS -->
+                <!-- JS render options -->
             </form>
 
-            <div class="question-explanation" id="questionExplanation"></div>
+            <div class="question-explanation" id="questionExplanation" hidden></div>
 
             <div class="controls">
                 <button class="btn ghost" id="prevBtn" type="button">Câu trước</button>
