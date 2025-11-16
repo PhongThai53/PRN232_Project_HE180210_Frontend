@@ -40,7 +40,7 @@
 
         async function loadQuizHTML() {
             try {
-                const res = await fetch('components/quiz.html');
+                const res = await fetch('components/trial.html');
                 const html = await res.text();
                 document.getElementById('main-container').innerHTML = html;
                 console.log('quiz.html loaded into #main-container');
@@ -49,34 +49,12 @@
             }
         }
 
-        const API_BASE = 'https://localhost:7108/api/Review';
 
-        const params = new URLSearchParams(window.location.search);
-        const mode = params.get('mode');
-        console.log('mode param =', mode);
-
-        let endpointPath;
-        if (mode === 'critical' || mode === 'criticalQuestion') {
-            endpointPath = 'getQuestion/criticalQuestion';
-        } else if (mode === 'nonCritical' || mode === 'nonCriticalQuestion') {
-            endpointPath = 'getQuestion/getNonCriticalQuestions';
-        } else {
-            endpointPath = 'getQuestion/getNonCriticalQuestions';
-        }
-
-        const apiToUse = API_BASE.replace(/\/+$/, '') + '/' + endpointPath.replace(/^\/+/, '');
-        console.log('Using API:', apiToUse);
-
-        async function loadQuizModule(apiUrl) {
-            console.log('loadQuizModule called with apiUrl =', apiUrl);
-            if (!apiUrl) {
-                console.error('Missing apiUrl for loadQuizModule');
-                return;
-            }
+        async function loadQuizModule() {
             try {
                 const { QuizModule } = await import('./js/quiz.js');
                 const quiz = new QuizModule({
-                    apiUrl: apiUrl,
+                    apiUrl: 'https://localhost:7108/api/Exam/createExam',
                     containerId: 'main-container'
                 });
                 await quiz.init();
@@ -91,7 +69,7 @@
             await initHeaderModule();
             await loadQuizHTML();
 
-            await loadQuizModule(apiToUse);
+            await loadQuizModule();
         })();
     </script>
 </body>

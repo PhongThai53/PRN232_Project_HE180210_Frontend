@@ -119,37 +119,61 @@ export class QuizModule {
     // ================= Show Result =================
     showResults() {
         let correctCount = 0;
-        const answers = this.state?.answer ?? this.answer ?? [];
-        this.state.results = this.state.results || {};
+        const answersArr = this.state?.answer ?? this.answer ?? [];
+
+        // chuẩn hóa: lọc null/undefined và build map questionId -> answer
+        const answerMap = new Map();
+        answersArr.filter(Boolean).forEach((a, i) => {
+            // lấy ưu tiên id từ nhiều tên có thể dùng
+            const qid = String(a.questionId ?? a.qId ?? a.id ?? '').trim();
+            if (qid) answerMap.set(qid, a);
+            else {
+                // nếu không có questionId, lưu theo index (chỉ dùng nếu không có id)
+                answerMap.set(`__idx_${i}`, a);
+            }
+        });
+
+        // reset results object
+        this.state.results = {};
 
         this.questions.forEach((q, idx) => {
-            // tìm answer cho câu này (theo questionId hoặc theo index)
-            const userAns = answers.find(a => a.questionId === q.questionId) ?? answers[idx] ?? null;
-            const selected = userAns?.selectedOption ?? null;
-            // lấy đáp án đúng: ưu tiên userAns.choice (nếu bạn lưu ở đó) rồi fallback q.choice/q.correctChoice
+            const qid = String(q.questionId ?? q.id ?? q.qId ?? '').trim();
+
+            let userAns = null;
+            if (qid && answerMap.has(qid)) {
+                userAns = answerMap.get(qid);
+            } else if (answerMap.has(`__idx_${idx}`)) {
+                userAns = answerMap.get(`__idx_${idx}`);
+            } else {
+                userAns = null;
+            }
+
+            const selected = userAns?.selectedOption ?? userAns?.selected ?? userAns?.choice ?? null;
             const correct = userAns?.choice ?? q.choice ?? q.correctChoice ?? q.correct ?? null;
 
-            const isCorrect = selected != null && correct != null && String(selected) === String(correct);
+            const isCorrect = (selected !== null && selected !== undefined) &&
+                (correct !== null && correct !== undefined) &&
+                String(selected) === String(correct);
+
             if (isCorrect) correctCount++;
 
-            // lưu trạng thái để dùng khi render lại grid
             this.state.results[idx] = { selected, correct, isCorrect };
 
-            // cập nhật ô trên grid (nếu đã render)
             const gridCell = document.querySelector(`#qGrid [data-idx="${idx}"]`);
             if (gridCell) {
                 gridCell.classList.remove('correct', 'wrong');
-                if (selected != null) gridCell.classList.add(isCorrect ? 'correct' : 'wrong');
+                if (selected !== null && selected !== undefined) {
+                    gridCell.classList.add(isCorrect ? 'correct' : 'wrong');
+                }
             }
 
-            // nếu câu đang hiển thị, tô màu label.option trong form hiện tại
             if (this.state.currentIndex === idx) {
                 const form = this.getElement('#optionsForm');
                 if (form) {
-                    const labels = Array.from(form.querySelectorAll('label.option'));
+                    const labels = Array.from(form.querySelectorAll('label.option, label.option-row'));
                     labels.forEach(lbl => {
                         lbl.classList.remove('correct', 'wrong');
-                        const input = lbl.querySelector('input[name="opt"]');
+                        const input = lbl.querySelector('input[name="opt"], input[name="option"]');
                         const choice = input ? input.value : lbl.dataset.choice;
                         if (choice != null && correct != null && String(choice) === String(correct)) {
                             lbl.classList.add('correct');
@@ -162,7 +186,6 @@ export class QuizModule {
             }
         });
 
-        // hiển thị tổng kết
         const box = this.getElement('#resultBox');
         if (box) {
             box.style.display = 'block';
@@ -171,6 +194,7 @@ export class QuizModule {
 
         this.state.submited = true;
     }
+
     // ================= Event Handlers =================
     attachHandlers() {
         const grid = this.getElement('#qGrid');
