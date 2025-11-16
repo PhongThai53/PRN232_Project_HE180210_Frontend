@@ -1,0 +1,76 @@
+<section id="examDetail" class="quiz-section container">
+    <div style="margin-bottom:20px;">
+        <a href="ExamResult.html" class="btn ghost">Quay lại danh sách</a>
+    </div>
+
+    <h1 class="title">Chi Tiết Bài Thi</h1>
+
+    <div id="examInfo" class="exam-info-card">
+        <!-- Thông tin bài thi -->
+    </div>
+
+    <div class="layout">
+        <aside class="card side-panel">
+            <div class="card-title">Danh sách câu hỏi</div>
+            <div class="q-grid" id="qGrid" role="list">
+                <!-- Grid câu hỏi -->
+            </div>
+        </aside>
+
+        <section class="question-card">
+            <div class="question-title" id="questionTitle">Câu hỏi:</div>
+            <div class="question-text" id="questionText"></div>
+            <div class="question-img" id="questionImg"></div>
+
+            <div class="options" id="optionsForm">
+                <!-- Options -->
+            </div>
+
+            <div class="question-explanation" id="questionExplanation"></div>
+
+            <div class="controls">
+                <button class="btn ghost" id="prevBtn" type="button">Câu trước</button>
+                <button class="btn primary" id="nextBtn" type="button">Câu tiếp theo</button>
+            </div>
+        </section>
+    </div>
+</section>
+
+<style>
+    .exam-info-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 24px;
+        border-radius: 8px;
+        margin-bottom: 24px;
+    }
+
+        .exam-info-card h2 {
+            margin: 0 0 16px 0;
+            font-size: 1.5rem;
+        }
+
+    .exam-info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+    }
+
+    .exam-info-item {
+        background: rgba(255,255,255,0.1);
+        padding: 12px;
+        border-radius: 6px;
+    }
+
+        .exam-info-item strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .exam-info-item span {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+</style>

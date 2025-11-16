@@ -3,25 +3,23 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>GPLX2025 — Review</title>
+    <title>GPLX2025 — Chi Tiết Bài Thi</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div id="header-container"></div>
     <main id="main-container" class="container">
-        <!-- components/quiz.html sẽ được chèn ở đây -->
+        <!-- Nội dung sẽ được load ở đây -->
     </main>
 
     <script type="module">
-        // --- Helpers to load fragments/modules ---
         async function loadHeaderHTML() {
             try {
                 const res = await fetch('components/header.html');
                 const html = await res.text();
                 document.getElementById('header-container').innerHTML = html;
-                console.log('header.html loaded');
             } catch (err) {
-                console.error('Error loading header.html:', err);
+                console.error('Error loading header:', err);
             }
         }
 
@@ -32,53 +30,52 @@
                     baseAPI: 'https://localhost:7108/api/auth',
                     logoutAPI: '/logout'
                 });
-                console.log('header.js loaded and initialized');
             } catch (err) {
                 console.error('Error loading header.js:', err);
             }
         }
 
-        async function loadQuizHTML() {
+        async function loadDetailHTML() {
             try {
-                const res = await fetch('components/trial.html');
+                const res = await fetch('components/examDetail.html');
                 const html = await res.text();
                 document.getElementById('main-container').innerHTML = html;
-                console.log('quiz.html loaded into #main-container');
             } catch (err) {
-                console.error('Error loading quiz.html:', err);
+                console.error('Error loading detail html:', err);
             }
         }
 
-
-        async function loadQuizModule() {
+        async function loadDetailModule() {
             try {
-                // Kiểm tra đăng nhập
-                const token = sessionStorage.getItem('authToken');
-                if (!token) {
-                    alert('Bạn cần đăng nhập để làm bài thi');
-                    window.location.href = 'index.html';
-                    return;
+                // Lấy examId từ URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const examId = urlParams.get('examId');
+
+                if (!examId) {
+                    throw new Error('Không tìm thấy examId');
                 }
 
-                const apiUrl = 'https://localhost:7108/api/Exam/createExam';
-                const { TrialModule } = await import('./js/trialQuiz.js');
-                const quiz = new TrialModule({
-                    apiUrl: apiUrl,
+                const { ExamDetailModule } = await import('./js/examDetail.js');
+                const detail = new ExamDetailModule({
+                    apiUrl: 'https://localhost:7108/api/Exam',
+                    examId: examId,
                     containerId: 'main-container'
                 });
-                await quiz.init();
-                console.log('trialQuiz.js loaded and initialized with API:', apiUrl);
+                await detail.init();
             } catch (err) {
-                console.error('Error loading trialQuiz.js:', err);
+                console.error('Error loading examDetail.js:', err);
+                const container = document.getElementById('main-container');
+                if (container) {
+                    container.innerHTML = `<p style="color:red;">${err.message}</p>`;
+                }
             }
         }
 
         (async function () {
             await loadHeaderHTML();
             await initHeaderModule();
-            await loadQuizHTML();
-
-            await loadQuizModule();
+            await loadDetailHTML();
+            await loadDetailModule();
         })();
     </script>
 </body>

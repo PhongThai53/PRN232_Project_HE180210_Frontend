@@ -1,0 +1,201 @@
+<section id="examHistory" class="exam-history-section container">
+    <div style="margin-bottom:20px;">
+        <a href="homepage.html" class="btn ghost">Quay lại Trang Chủ</a>
+    </div>
+    <h1 class="title">Lịch Sử Bài Thi</h1>
+
+    <div class="stats-summary" id="statsSummary" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:24px;">
+        <!-- Stats cards -->
+    </div>
+
+    <div class="filter-bar" style="margin-bottom:20px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+        <div>
+            <label style="margin-right:8px;">
+                <input type="radio" name="statusFilter" value="all" checked> Tất cả
+            </label>
+            <label style="margin-right:8px;">
+                <input type="radio" name="statusFilter" value="completed"> Đã hoàn thành
+            </label>
+            <label>
+                <input type="radio" name="statusFilter" value="incomplete"> Chưa hoàn thành
+            </label>
+        </div>
+    </div>
+
+    <div id="examListContainer" class="exam-list">
+        <p style="text-align:center; color:#999;">Đang tải...</p>
+    </div>
+</section>
+
+<style>
+    .stats-summary .stat-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+        .stats-summary .stat-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .stats-summary .stat-card p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .stats-summary .stat-card.success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        .stats-summary .stat-card.failed {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+        }
+
+        .stats-summary .stat-card.pending {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+    .exam-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .exam-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 16px;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 16px;
+        align-items: center;
+        transition: all 0.2s;
+    }
+
+        .exam-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+
+        .exam-card.completed {
+            border-left: 4px solid #28a745;
+        }
+
+        .exam-card.failed {
+            border-left: 4px solid #dc3545;
+        }
+
+        .exam-card.incomplete {
+            border-left: 4px solid #ffc107;
+            background: #fffbf0;
+        }
+
+    .exam-id {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #667eea;
+        min-width: 60px;
+        text-align: center;
+    }
+
+    .exam-details {
+        flex: 1;
+    }
+
+        .exam-details h3 {
+            margin: 0 0 8px 0;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .exam-details .meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+            .exam-details .meta span {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+    .exam-score {
+        text-align: center;
+        min-width: 100px;
+    }
+
+        .exam-score .score-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+            .exam-score .score-number.pass {
+                color: #28a745;
+            }
+
+            .exam-score .score-number.fail {
+                color: #dc3545;
+            }
+
+            .exam-score .score-number.pending {
+                color: #ffc107;
+            }
+
+        .exam-score .score-label {
+            font-size: 0.75rem;
+            color: #999;
+            margin: 4px 0 0 0;
+        }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+        .badge.trial {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge.real {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .badge.completed {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .badge.incomplete {
+            background: #fff9c4;
+            color: #f57f17;
+        }
+
+    @media (max-width: 768px) {
+        .exam-card {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        .exam-details .meta {
+            justify-content: center;
+        }
+    }
+</style>
