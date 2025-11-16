@@ -1,0 +1,161 @@
+<section id="adminQuestions" class="admin-section container">
+    <h1 class="title">Quản Lý Câu Hỏi</h1>
+
+    <div style="margin-bottom:20px; display:flex; gap:12px; justify-content:space-between;">
+        <div style="display:flex; gap:8px;">
+            <button class="btn primary" id="addQuestionBtn">+ Thêm mới</button>
+            <button class="btn ghost" id="refreshBtn">🔄 Làm mới</button>
+        </div>
+
+        <div style="display:flex; gap:8px;">
+            <input type="text" id="searchInput" placeholder="Tìm kiếm..."
+                   style="padding:8px; border:1px solid #ddd; border-radius:4px; width:250px;">
+        </div>
+    </div>
+
+    <div id="questionsTableContainer">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th style="width:60px;">ID</th>
+                    <th>Nội dung</th>
+                    <th style="width:100px;">Loại</th>
+                    <th style="width:80px;">Đáp án</th>
+                    <th style="width:150px;">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody id="questionsTableBody">
+                <tr><td colspan="5" style="text-align:center; padding:40px;">Đang tải...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div id="questionModal" class="modal" style="display:none;">
+        <div class="modal-content" style="max-width:800px; max-height:90vh; overflow-y:auto;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+                <h2 id="modalTitle">Thêm câu hỏi</h2>
+                <button id="closeModal" class="btn ghost" style="padding:4px 12px;">&times;</button>
+            </div>
+
+            <form id="questionForm">
+                <div style="margin-bottom:16px;">
+                    <label style="display:block; margin-bottom:6px; font-weight:600;">Nội dung câu hỏi *</label>
+                    <textarea id="questionContent" rows="3" required
+                              style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;"></textarea>
+                </div>
+
+                <div style="margin-bottom:16px;">
+                    <label style="display:block; margin-bottom:6px; font-weight:600;">Giải thích</label>
+                    <textarea id="questionExplanation" rows="2"
+                              style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;"></textarea>
+                </div>
+
+                <div style="margin-bottom:16px;">
+                    <label style="display:block; margin-bottom:6px; font-weight:600;">Hình ảnh</label>
+                    <input type="file" id="questionImage" accept="image/*"
+                           style="padding:8px; border:1px solid #ddd; border-radius:4px; width:100%;">
+                    <div id="imagePreview" style="margin-top:8px;"></div>
+                </div>
+
+                <div style="margin-bottom:16px;">
+                    <label><input type="checkbox" id="isCritical"> Câu liệt</label>
+                </div>
+
+                <div style="margin-bottom:16px;">
+                    <label style="display:block; margin-bottom:6px; font-weight:600;">Đáp án đúng *</label>
+                    <select id="correctAnswer" required
+                            style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                        <option value="">Chọn đáp án</option>
+                        <option value="0">A</option>
+                        <option value="1">B</option>
+                        <option value="2">C</option>
+                        <option value="3">D</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom:16px;">
+                    <label style="display:block; margin-bottom:6px; font-weight:600;">Các đáp án *</label>
+                    <div id="optionsContainer"></div>
+                    <button type="button" class="btn ghost" id="addOptionBtn" style="margin-top:8px;">+ Thêm đáp án</button>
+                </div>
+
+                <div style="margin-top:20px; display:flex; gap:8px; justify-content:flex-end;">
+                    <button type="button" class="btn ghost" id="cancelBtn">Hủy</button>
+                    <button type="submit" class="btn primary">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+    .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+        .admin-table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .admin-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .admin-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 24px;
+        border-radius: 8px;
+        width: 90%;
+    }
+
+    .option-item {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+        .option-item input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+    .badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+    }
+
+        .badge.critical {
+            background: #fee;
+            color: #c00;
+        }
+</style>

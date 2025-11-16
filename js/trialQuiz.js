@@ -151,7 +151,7 @@ export class TrialModule {
         // Render ảnh
         if (imgContainer) {
             if (q.imageUrl) {
-                imgContainer.style.cssText = 'width:100%;max-height:300px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#f8f8f8;margin:12px 0;border-radius:8px;';
+                imgContainer.style.cssText = 'width:100%;height:240px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#f8f8f8;';
                 imgContainer.innerHTML = `<img src="${this.escapeHtml(q.imageUrl)}" alt="Hình câu ${q.questionId}" loading="lazy" style="max-width:100%;max-height:300px;object-fit:contain;">`;
             } else {
                 imgContainer.innerHTML = '';

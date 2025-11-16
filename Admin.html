@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>GPLX2025 — Quản Lý Câu Hỏi</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="header-container"></div>
+    <main id="main-container" class="container">
+        <!-- Nội dung sẽ được load ở đây -->
+    </main>
+
+    <script type="module">
+        // Check auth & role
+        const token = sessionStorage.getItem('authToken');
+        const userStr = sessionStorage.getItem('authUser');
+        const user = userStr ? JSON.parse(userStr) : null;
+
+        if (!token || !user) {
+            alert('Vui lòng đăng nhập!');
+            window.location.href = 'index.html';
+        }
+
+        if (user.role !== 'Admin') {
+            alert('Bạn không có quyền truy cập!');
+            window.location.href = 'homepage.html';
+        }
+
+        async function loadHeaderHTML() {
+            try {
+                const res = await fetch('components/header.html');
+                const html = await res.text();
+                document.getElementById('header-container').innerHTML = html;
+            } catch (err) {
+                console.error('Error loading header:', err);
+            }
+        }
+
+        async function initHeaderModule() {
+            try {
+                const { default: initHeader } = await import('./js/header.js');
+                initHeader({
+                    baseAPI: 'https://localhost:7108/api/auth',
+                    logoutAPI: '/logout'
+                });
+            } catch (err) {
+                console.error('Error loading header.js:', err);
+            }
+        }
+
+        async function loadAdminHTML() {
+            try {
+                const res = await fetch('components/adminQuestions.html');
+                const html = await res.text();
+                document.getElementById('main-container').innerHTML = html;
+            } catch (err) {
+                console.error('Error loading admin html:', err);
+            }
+        }
+
+        async function loadAdminModule() {
+            try {
+                const { AdminQuestionsModule } = await import('./js/adminQuestions.js');
+                const admin = new AdminQuestionsModule({
+                    apiUrl: 'https://localhost:7108/api/admin/questionadmin',
+                    containerId: 'main-container'
+                });
+                await admin.init();
+            } catch (err) {
+                console.error('Error loading admin module:', err);
+            }
+        }
+
+        (async function () {
+            await loadHeaderHTML();
+            await initHeaderModule();
+            await loadAdminHTML();
+            await loadAdminModule();
+        })();
+    </script>
+</body>
+</html>

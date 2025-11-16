@@ -100,7 +100,6 @@
         });
     }
 
-    // ---- LOGIN ----
     if (loginForm) {
         loginForm.addEventListener("submit", function (e) {
             e.preventDefault();
@@ -115,16 +114,26 @@
                 body: JSON.stringify(payload)
             })
                 .then(data => {
-                    showAlert({ title: data.succeeded ? "Thành công!" : "Login thất bại", message: data.message });
                     if (data.succeeded) {
                         sessionStorage.setItem("authToken", data.data.token);
                         sessionStorage.setItem("authUser", JSON.stringify(data.data.user));
-                        window.location.href = "homepage.html";
+
+                        const user = data.data.user;
+                        if (user.role === 'Admin') {
+                            showAlert({ title: "Thành công!", message: "Chào mừng Admin!" });
+                            window.location.href = "Admin.html";
+                        } else if (user.role === 'User') {
+                            showAlert({ title: "Thành công!", message: data.message });
+                            window.location.href = "homepage.html";
+                        }
+                    } else {
+                        showAlert({ title: "Login thất bại", message: data.message });
                     }
                 })
                 .catch(err => showAlert({ title: "Lỗi!", message: err.message }));
         });
     }
+
 
     // ---- LOGOUT ----
     if (logoutBtn) {
@@ -199,7 +208,7 @@
                     if (data.succeeded) {
                         sessionStorage.removeItem("authEmail");
                         sessionStorage.removeItem("userTokenType");
-                        window.location.href = "login.html";
+                        window.location.href = "index.html";
                     }
                 })
                 .catch(err => showAlert({ title: "Lỗi", message: err.message }));
