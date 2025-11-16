@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>GPLX2025 — Review</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="header-container"></div>
+    <main id="main-container" class="container">
+        <!-- components/quiz.html sẽ được chèn ở đây -->
+    </main>
+    <script type="module">
+        const params = new URLSearchParams(window.location.search);
+
+        async function loadHeaderHTML() {
+            try {
+                const res = await fetch('components/header.html');
+                const html = await res.text();
+                document.getElementById('header-container').innerHTML = html;
+                console.log('header.html loaded');
+            } catch (err) {
+                console.error('Error loading header.html:', err);
+            }
+        }
+
+        async function initHeaderModule() {
+            try {
+                const { default: initHeader } = await import('./js/header.js');
+                initHeader({
+                    baseAPI: 'https://localhost:7108/api/auth',
+                    logoutAPI: '/logout'
+                });
+                console.log('header.js loaded and initialized');
+            } catch (err) {
+                console.error('Error loading header.js:', err);
+            }
+        }
+
+        async function loadQuizHTML() {
+            try {
+                const res = await fetch('components/quiz.html');
+                const html = await res.text();
+                document.getElementById('main-container').innerHTML = html;
+                console.log('quiz.html loaded into #main-container');
+            } catch (err) {
+                console.error('Error loading quiz.html:', err);
+            }
+        }
+
+        async function loadQuizModule() {
+            try {
+                const { QuizModule } = await import('./js/quiz.js');
+
+                // Lấy các params từ URL (nếu có)
+                const examId = params.get('examId');
+                const setId = params.get('setId');
+
+                // Tạo API URL dựa trên params
+                let apiUrl = 'https://localhost:7108/api/Review/getQuestion/criticalQuestion ';
+                if (examId) {
+                    apiUrl += `?examId=${examId}`;
+                } else if (setId) {
+                    apiUrl += `?setId=${setId}`;
+                }
+
+                const quiz = new QuizModule({
+                    apiUrl: apiUrl,
+                    containerId: 'main-container'
+                });
+                await quiz.init();
+                console.log('quiz.js loaded and initialized with API:', apiUrl);
+            } catch (err) {
+                console.error('Error loading quiz.js:', err);
+            }
+        }
+
+        (async function () {
+            await loadHeaderHTML();
+            await initHeaderModule();
+            await loadQuizHTML();
+            await loadQuizModule();
+        })();
+    </script>
+</body>
+</html>

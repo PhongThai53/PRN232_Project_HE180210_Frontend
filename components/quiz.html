@@ -1,0 +1,39 @@
+<section id="quiz" class="quiz-section container" aria-labelledby="quizTitle">
+    <h1 class="title" id="quizTitle">Thi Trắc Nghiệm (Demo)</h1>
+    <div class="layout">
+        <aside class="card" aria-labelledby="gridTitle">
+            <div id="gridTitle" class="card-title">Câu hỏi</div>
+            <div class="q-grid" id="qGrid" role="list" aria-label="Danh sách câu hỏi">
+                <!-- JS sẽ render các ô số câu -->
+            </div>
+
+            <div style="margin-top:12px; display:flex; gap:8px;">
+                <button class="btn" id="resetBtn" type="button">Làm lại</button>
+            </div>
+        </aside>
+
+        <section class="question-card" aria-live="polite">
+            <div class="question-title" id="questionTitle">Câu hỏi 1:</div>
+            <div class="question-text" id="questionText">Nội dung ví dụ cho câu hỏi 1.</div>
+
+            <div class="question-img" id="questionImg" aria-hidden="true">[ Hình (blank) ]</div>
+
+            <form class="options" id="optionsForm" role="radiogroup" aria-labelledby="questionTitle">
+                <!-- options sẽ render bằng JS -->
+            </form>
+
+            <div class="question-explanation" id="questionExplanation"></div>
+
+            <div class="controls">
+                <button class="btn ghost" id="prevBtn" type="button">Câu trước</button>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn" id="markBtn" type="button">Đánh dấu</button>
+                    <button class="btn primary" id="nextBtn" type="button">Câu tiếp theo</button>
+                    <button class="btn primary" id="submitBtn" type="button">Nộp bài</button>
+                </div>
+            </div>
+
+            <div id="resultBox" style="display:none; margin-top:16px;"></div>
+        </section>
+    </div>
+</section>

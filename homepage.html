@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>GPLX2025</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="main-container"></div>
+
+   
+
+    <script type="module">
+
+        const HEADER_HTML = 'components/header.html';
+        const HOME_HTML = 'components/home.html';
+        const HEADER_JS = '/js/header.js';
+        const AUTH_JS = '/js/auth.js';
+
+        const fetchText = async (p) => { try { const r = await fetch(p); return r.ok ? await r.text() : null; } catch { return null; } };
+
+        (async () => {
+            const hdr = await fetchText(HEADER_HTML);
+            if (hdr) document.getElementById('header-container').innerHTML = hdr;
+            else console.warn('header.html not found:', HEADER_HTML);
+
+            try { await import(HEADER_JS); }
+            catch (e) {
+                const s = document.createElement('script'); s.src = HEADER_JS; document.body.appendChild(s);
+            }
+
+            const home = await fetchText(HOME_HTML);
+            document.getElementById('main-container').innerHTML = home ?? '<section style="padding:24px"><h2>Chào mừng</h2></section>';
+
+            import(AUTH_JS).catch(() => console.info('auth.js not found (ok if page does not need it):', AUTH_JS));
+        })();
+    </script>
+</body>
+</html>

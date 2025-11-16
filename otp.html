@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product List</title>
+    <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form id="resetForm">
+                <h1>Đặt Lại Mật Khẩu</h1>
+                <input type="newPassword" placeholder="Mật khẩu" />
+                <input type="reEnterNewPassword" placeholder="Nhập Lại Mật khẩu" />
+                <button>Xác Nhận</button>
+            </form>
+        </div>
+
+        <div class="form-container sign-in-container">
+            <form id="otpForm">
+                <h1>Nhập OTP</h1>
+                <input type="text" id="otpInput" placeholder="Nhập OTP" />
+                <button id="goToReset">Xác Nhận</button>
+            </form>
+        </div>
+
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Nhập mã OTP được gửi đến email của bạn.</h1>
+                    <p>Mã có hiệu lực trong vài phút, vui lòng kiểm tra hộp thư của bạn.</p>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Nhập mật khẩu mới để đặt lại tài khoản.</h1>
+                    <p>Hãy chọn mật khẩu mạnh để bảo vệ thông tin của bạn.</p>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const goToResetButton = document.getElementById('goToReset');
+            const container = document.getElementById('container');
+        </script>
+        <script src="../js/auth.js"></script>
+</body>
+</html>
