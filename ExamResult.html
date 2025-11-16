@@ -47,7 +47,16 @@
 
         async function loadHistoryModule() {
             try {
+
+                const token = sessionStorage.getItem('authToken');
+                if (!token) {
+                    alert('Vui lòng đăng nhập!');
+                    window.location.href = 'index.html';
+                    return;
+                }
+
                 const { ExamHistoryModule } = await import('./js/examHistory.js');
+
                 const history = new ExamHistoryModule({
                     apiUrl: 'https://localhost:7108/api/Exam/result',
                     containerId: 'main-container'
