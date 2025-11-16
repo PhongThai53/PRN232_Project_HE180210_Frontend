@@ -9,18 +9,18 @@
     </div>
 
     <div id="profile-area" class="profile-area" style="display:none;">
-        <div class="profile-wrapper" id="profileWrapper">
+        <div class="profile-wrapper" id="profileWrapper" style="display: flex; align-items: center; gap: 8px;">
             <div class="greeting" id="greeting" tabindex="0" aria-haspopup="true" aria-expanded="false" role="button"
                  onclick="const d=this.nextElementSibling;const e=this.getAttribute('aria-expanded')==='true';this.setAttribute('aria-expanded',String(!e));d.setAttribute('aria-hidden',String(e));d.classList.toggle('show');">
                 <span class="greeting-text">Xin chào, <strong id="userName"></strong></span>
                 <span class="caret" aria-hidden="true"></span>
             </div>
 
-            <div class="profile-dropdown" id="profileDropdown" role="menu" aria-hidden="true">
-                <a class="dropdown-item" href="#view-profile" role="menuitem">View Profile</a>
-                <a class="dropdown-item" href="login.html" id="logoutBtn" role="menuitem"
-                   onclick="sessionStorage.removeItem('authToken');sessionStorage.removeItem('authUser');alert('Đã logout');">Logout</a>
-            </div>
+            <!-- Nút Logout nhỏ ngay cạnh greeting -->
+            <a class="dropdown-item" href="index.html" id="logoutBtn" role="menuitem"
+               onclick="sessionStorage.removeItem('authToken');sessionStorage.removeItem('authUser');alert('Đã logout');">
+                Logout
+            </a>
         </div>
     </div>
 </header>

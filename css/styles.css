@@ -45,75 +45,7 @@ body {
     font-size: 20px;
 }
 
-/* Profile / greeting */
-.profile-area {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
 
-.greeting {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: 18px;
-    background: #fff;
-    border: 1px solid #ddd;
-    cursor: pointer;
-    user-select: none;
-    position: relative;
-}
-
-    .greeting:focus {
-        outline: 2px solid rgba(34,34,34,0.06);
-    }
-
-    .greeting .greeting-text {
-        color: #333;
-        font-weight: 600;
-    }
-
-.caret {
-    width: 8px;
-    height: 8px;
-    border-left: 3px solid #666;
-    border-bottom: 3px solid #666;
-    transform: rotate(-45deg);
-    margin-left: 4px;
-    opacity: .9;
-}
-
-/* Dropdown */
-.profile-dropdown {
-    position: absolute;
-    right: 0;
-    top: calc(75%);
-    min-width: 160px;
-    background: #fff;
-    border: 1px solid #e6e6e6;
-    border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0,0,0,.08);
-    overflow: hidden;
-    display: none; /* shown by JS */
-    z-index: 30;
-}
-
-    .profile-dropdown .dropdown-item {
-        display: block;
-        padding: 10px 12px;
-        text-decoration: none;
-        color: #333;
-        border-bottom: 1px solid #f2f2f2;
-    }
-
-        .profile-dropdown .dropdown-item:last-child {
-            border-bottom: none;
-        }
-
-        .profile-dropdown .dropdown-item:hover {
-            background: var(--muted);
-        }
 
 /* Main / Homepage */
 .container {
