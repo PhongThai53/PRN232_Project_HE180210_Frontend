@@ -145,7 +145,7 @@ export class TrialModule {
         const form = this.getElement('#optionsForm');
         const explanation = this.getElement('#questionExplanation');
 
-        if (title) title.textContent = `Câu hỏi:`;
+        if (title) title.textContent = `Câu hỏi: ${this.state.currentIndex + 1}`;
         if (text) text.textContent = q.content ?? '';
 
         // Render ảnh
@@ -164,7 +164,7 @@ export class TrialModule {
             form.innerHTML = q.options.map(opt => `
                 <label class="option">
                     <input type="radio" name="opt" value="${this.escapeHtml(opt.choice)}" ${this.state.submitted ? 'disabled' : ''}>
-                    <span>${this.escapeHtml(opt.content)}</span>
+                    <span>${opt.choice}. ${this.escapeHtml(opt.content)}</span>
                 </label>
             `).join('');
 
@@ -200,6 +200,10 @@ export class TrialModule {
         if (submitBtn) submitBtn.style.display = this.state.submitted ? 'none' : 'inline-block';
         if (resetBtn) resetBtn.disabled = this.state.submitted;
         if (markBtn) markBtn.disabled = this.state.submitted;
+
+        if (this.state.submitted === true) {
+            nextBtn.style.display = 'none';
+        }
     }
 
     goTo(idx) {
@@ -320,7 +324,13 @@ export class TrialModule {
             const token = sessionStorage.getItem('authToken');
             if (!token) throw new Error('Chưa đăng nhập!');
 
-            const res = await fetch(this.apiUrl, {
+            const urlParams = new URLSearchParams(window.location.search);
+            const criticalCount = urlParams.get('criticalCount') || 4;
+            const nonCriticalCount = urlParams.get('nonCriticalCount') || 21;
+
+            const apiUrlWithParams = `${this.apiUrl}?criticalCount=${criticalCount}&nonCriticalCount=${nonCriticalCount}`;
+
+            const res = await fetch(apiUrlWithParams, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

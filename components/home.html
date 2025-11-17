@@ -14,12 +14,22 @@
             <h3 class="card-title">Chuyên mục</h3>
             <nav class="quick-links">
                 <a class="link-item" id="instruction" href="#">Mẹo & Hướng Dẫn</a>
-                <a class="link-item" id="exam" href="Trial.html">Ôn Thi Trắc Nghiệm</a>
+
+                <div style="padding: 8px 0;">
+                    <div style="font-weight: 500; margin-bottom: 8px;">Ôn Thi Trắc Nghiệm</div>
+                    <div style="font-weight: 300; margin-bottom: 8px; font-size:14px">Câu Điểm Liệt</div>
+                    <input type="number" id="criticalCount" placeholder="Câu liệt (4)" min="0" value="4" style="width: 100%; padding: 6px; margin-bottom: 6px; border: 1px solid #ddd; border-radius: 4px;">
+                    <div style="font-weight: 300; margin-bottom: 8px; font-size: 14px">Câu Không Liệt</div>
+                    <input type="number" id="nonCriticalCount" placeholder="Câu không liệt (21)" min="0" value="21" style="width: 100%; padding: 6px; margin-bottom: 6px; border: 1px solid #ddd; border-radius: 4px;">
+                    <button id="startExamBtn" style="width: 100%; padding: 8px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">Bắt đầu thi</button>
+                </div>
+
                 <a class="link-item" id="critical" href="Review.html?mode=critical">Ôn Thi 25 Câu Điểm Liệt</a>
                 <a class="link-item" id="nonCritical" href="Review.html?mode=nonCritical">Ôn Thi Các Câu Không Liệt</a>
                 <a class="link-item" id="viewResult" href="ExamResult.html">Xem kết quả</a>
             </nav>
         </aside>
+
 
         <section>
             <div class="grid-cards">

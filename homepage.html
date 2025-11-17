@@ -10,7 +10,7 @@
     <div id="header-container"></div>
     <div id="main-container"></div>
 
-   
+
 
     <script type="module">
 
@@ -33,6 +33,21 @@
 
             const home = await fetchText(HOME_HTML);
             document.getElementById('main-container').innerHTML = home ?? '<section style="padding:24px"><h2>Chào mừng</h2></section>';
+
+            // Thêm event listener cho nút "Bắt đầu thi" sau khi load home.html
+            setTimeout(() => {
+                const startBtn = document.getElementById('startExamBtn');
+                const criticalInput = document.getElementById('criticalCount');
+                const nonCriticalInput = document.getElementById('nonCriticalCount');
+
+                if (startBtn && criticalInput && nonCriticalInput) {
+                    startBtn.addEventListener('click', () => {
+                        const critical = criticalInput.value || 4;
+                        const nonCritical = nonCriticalInput.value || 21;
+                        window.location.href = `Trial.html?criticalCount=${critical}&nonCriticalCount=${nonCritical}`;
+                    });
+                }
+            }, 100);
 
             import(AUTH_JS).catch(() => console.info('auth.js not found (ok if page does not need it):', AUTH_JS));
         })();
